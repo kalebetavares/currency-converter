@@ -19,7 +19,7 @@ API documentation: https://docs.awesomeapi.com.br/api-de-moedas
 ## 🧠 Principles Applied
 - **TDD (Test-Driven Development)**
 - **Clean Code**
-- **SOLID Architecture**
+- **SOLID Principles**
 
 ---
 
