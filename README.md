@@ -26,5 +26,6 @@ API documentation: https://docs.awesomeapi.com.br/api-de-moedas
 ## 🛠️ Technologies Used
 - **Java 11**
 - **JUnit 5**
+- **Mockito**
 
 ---
