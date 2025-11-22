@@ -20,7 +20,7 @@ class CurrencyPairValidatorTest {
     void shouldThrowInvalidCurrencyPairExceptionWhenNull() {
         Exception exception = assertThrows(InvalidCurrencyPairException.class, () -> currencyPairValidator.validateCurrencyPair(null));
 
-        assertEquals("Par de moedas inválido: o par informado não pode ser nulo.", exception.getMessage());
+        assertEquals("Moeda inválida: o par informado não pode ser nulo.", exception.getMessage());
     }
 
     @ParameterizedTest
