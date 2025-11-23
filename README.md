@@ -1,6 +1,6 @@
 # Currency Converter
 
-A lightweight and framework-free currency conversion application built with pure Java 11, designed to fetch real-time exchange rates using the public **AwesomeAPI**.  
+A lightweight and framework-free currency conversion application built with Java 11, designed to fetch real-time exchange rates using the public **AwesomeAPI**.  
 API documentation: https://docs.awesomeapi.com.br/api-de-moedas
 
 ---
