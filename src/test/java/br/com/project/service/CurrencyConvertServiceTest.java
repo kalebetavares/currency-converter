@@ -2,6 +2,7 @@ package br.com.project.service;
 
 import br.com.project.exception.InvalidCurrencyPairException;
 import br.com.project.exception.InvalidValueException;
+import br.com.project.formatter.MoneyFormatter;
 import br.com.project.infrastructure.client.ExchangeRateClient;
 import br.com.project.validation.CurrencyPairValidator;
 import br.com.project.validation.ValueValidator;
@@ -28,10 +29,12 @@ class CurrencyConvertServiceTest {
     private ValueValidator valueValidator;
     @Mock
     private CurrencyPairValidator currencyPairValidator;
+    @Mock
+    private MoneyFormatter moneyFormatter;
 
     @BeforeEach
     void setUp() {
-        currencyConvertService = new CurrencyConvertService(valueValidator, currencyPairValidator, exchangeRateClient);
+        currencyConvertService = new CurrencyConvertService(valueValidator, currencyPairValidator, exchangeRateClient, moneyFormatter);
     }
 
     @Test
@@ -98,16 +101,22 @@ class CurrencyConvertServiceTest {
         String currencyPairValid = "USD-BRL";
         BigDecimal returnTax = BigDecimal.valueOf(5.4021);
 
+        BigDecimal rawResultBeforeFormatting = valueValid.multiply(returnTax);
+
+        BigDecimal expectedFormatted = BigDecimal.valueOf(5402.10).setScale(2, RoundingMode.HALF_UP);
+
         when(exchangeRateClient.getExchangeRate(currencyPairValid))
                 .thenReturn(returnTax);
 
+        when(moneyFormatter.format(rawResultBeforeFormatting)).thenReturn(expectedFormatted);
+
         BigDecimal result = currencyConvertService.convert(valueValid, currencyPairValid);
 
-        BigDecimal expected = BigDecimal.valueOf(5402.10).setScale(2, RoundingMode.HALF_UP);
-        assertEquals(expected, result);
+        assertEquals(expectedFormatted, result);
 
         verify(valueValidator).validateValue(valueValid);
         verify(currencyPairValidator).validateCurrencyPair(currencyPairValid);
         verify(exchangeRateClient).getExchangeRate(currencyPairValid);
+        verify(moneyFormatter).format(rawResultBeforeFormatting);
     }
 }
